@@ -9,19 +9,19 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     '''Главная страница с описанием сервиса'''
-    return "Главная страница с описанием сервиса"
+    return render_template("index.html")
 
 
 @app.route("/form")
 def form():
     '''Страница с формой запроса'''
-    return "Страница с формой запроса"
+    return render_template("form.html")
 
 
 @app.route("/contacts")
 def contacts():
     '''Страница с контактами'''
-    return "Страница с контактами"
+    return render_template("contacts.html")
 
 
 # @app.route("/login", methods=['GET', 'POST'])
@@ -48,8 +48,6 @@ def contacts():
 #         f = request.files['the_file']
 #         f.save('./uploaded_file.txt')
 #
-
-
 
 # def login():
 #     error = None

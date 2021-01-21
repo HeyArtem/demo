@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Аналитика</title>
+</head>
+<body>
+
+<a href="index.html"> Главная страница </a>
+
+<script>
+    urlParams = new URLSearchParams(window.location.search);
+    params = {};
+
+    urlParams.forEach((p, key) => {
+    params[key] = p;
+    });
+
+    document.write(params.search, '<br>')
+</script>
+
+<a href="contacts.html"> Контакты </a>
+
+</body>
+</html>
