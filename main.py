@@ -2,31 +2,43 @@ from flask import Flask
 from flask import request
 from flask import render_template
 
+
 app = Flask(__name__)
 
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        do_not_login
-    else:
-        show_the_login_form()
+@app.route("/")
+def hello():
+    '''Главная страница с описанием сервиса'''
+    return "Главная страница с описанием сервиса"
 
 
-
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello(name=None):
-    return render_template(
-        "hello.html",
-        name=name
-    )
+@app.route("/form")
+def form():
+    '''Страница с формой запроса'''
+    return "Страница с формой запроса"
 
 
+@app.route("/contacts")
+def contacts():
+    '''Страница с контактами'''
+    return "Страница с контактами"
 
 
+# @app.route("/login", methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         do_not_login
+#     else:
+#         show_the_login_form()
 
 
+# #@app.route("/hello/")
+# @app.route("/hello/<name>")
+# def hello(name=None):
+#     return render_template(
+#         "hello.html",
+#         name=name
+#     )
 
 
 
@@ -36,9 +48,6 @@ def hello(name=None):
 #         f = request.files['the_file']
 #         f.save('./uploaded_file.txt')
 #
-
-
-
 
 
 
@@ -54,30 +63,9 @@ def hello(name=None):
 #
 
 
-
-
-
-
-
-
 # @app.route("/status")
 # def status():
 #     return "Сделано на flask"
-
-
-
-
-@app.route("/")
-def hello():
-    return "Hello, World!"
-
-
-
-
-if __name__ == '__main__':
-    app.run()
-
-
 
 
 # @app.route('/user/<username>')# <>переменная часть
@@ -89,7 +77,8 @@ if __name__ == '__main__':
 #     return 'Post ' + post_id
 
 
-
+if __name__ == '__main__':
+    app.run()
 
 
 
