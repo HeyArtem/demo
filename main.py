@@ -57,7 +57,7 @@ def form():
         return render_template('form.html')
     else:
         search = round(average_salary(request.form['search']), 2)
-        return render_template("search.html", search=search)
+        return render_template("search.html", search=search, start=request.form['search'])
 
 
 @app.route("/contacts")
@@ -67,7 +67,6 @@ def contacts():
 
 
 if __name__ == '__main__':
-    #print(average_salary('Москва Python'))
     app.run()
 
 
