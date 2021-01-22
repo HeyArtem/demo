@@ -17,7 +17,25 @@
     });
 
     document.write(params.search, '<br>')
+    document.write(params.submit, '<br>')
+
 </script>
+
+
+<script>
+    urlParams = new URLSearchParams(window.location.search);
+    params = {};
+
+    urlParams.forEach((p, key) => {
+     params[key] = p;
+    });
+
+    document.write(params.Name_1, '<br>')
+    document.write(params.SurName_1, '<br>')
+
+</script>
+
+
 
 <a href="contacts"> Контакты </a>
 
