@@ -24,6 +24,11 @@ def contacts():
     return render_template("contacts.html")
 
 
+
+
+
+
+
 # @app.route("/login", methods=['GET', 'POST'])
 # def login():
 #     if request.method == 'POST':
