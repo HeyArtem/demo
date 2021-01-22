@@ -1,9 +1,47 @@
 from flask import Flask
 from flask import request
+import requests
 from flask import render_template
 
-
 app = Flask(__name__)
+
+url = 'https://api.hh.ru/vacancies'
+
+def f_vacancies(page, search):
+    '''Зарплата на одной странице'''
+    salary = []
+    params = {'text': f'{search}', 'page': page}
+    vacancies = requests.get(url, params=params).json()
+    for item in vacancies['items']:
+        start, stop = 0, 0
+        if item['salary'] and item['salary']['currency'] == 'RUR':
+            if item['salary']['from'] and item['salary']['to']:
+                start = int(item['salary']['from'])
+                stop = int(item['salary']['to'])
+            elif item['salary']['from'] and not item['salary']['to']:
+                start = int(item['salary']['from'])
+                stop = start
+            elif not item['salary']['from'] and item['salary']['to']:
+                stop = int(item['salary']['to'])
+                start = stop
+        if (start + stop) / 2 > 0:
+            salary.append((start + stop) / 2)
+    return salary
+
+
+def average_salary(search):
+    '''Средняя зарпалата'''
+    data = search.split()
+    search = ' AND '.join(data)
+    params = {'text': f'{search}'}
+    pages = requests.get(url, params=params).json()['pages']
+    vacancies = []
+    for page in range(pages):
+        vacancies.extend(f_vacancies(page, search))
+    if len(vacancies):
+        return sum(vacancies) / len(vacancies)
+    else:
+        return 'Нет данных!'
 
 
 @app.route("/")
@@ -12,10 +50,14 @@ def hello():
     return render_template("index.html")
 
 
-@app.route("/form")
+@app.route("/form", methods=['GET', 'POST'])
 def form():
     '''Страница с формой запроса'''
-    return render_template("form.html")
+    if request.method == 'GET':
+        return render_template('form.html')
+    else:
+        search = round(average_salary(request.form['search']), 2)
+        return render_template("search.html", search=search)
 
 
 @app.route("/contacts")
@@ -24,63 +66,8 @@ def contacts():
     return render_template("contacts.html")
 
 
-
-
-
-
-
-# @app.route("/login", methods=['GET', 'POST'])
-# def login():
-#     if request.method == 'POST':
-#         do_not_login
-#     else:
-#         show_the_login_form()
-
-
-# #@app.route("/hello/")
-# @app.route("/hello/<name>")
-# def hello(name=None):
-#     return render_template(
-#         "hello.html",
-#         name=name
-#     )
-
-
-
-# @app.route('/upload', method=['GET' 'POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#         f = request.files['the_file']
-#         f.save('./uploaded_file.txt')
-#
-
-# def login():
-#     error = None
-#     if request.method == 'POST':
-#         if valid_login(request.form['username'],
-#             request.form['password']):
-#             return log_the_user_in(
-#                 request.form['username'])
-#         else:
-#             error = 'Invalid username/password'
-#
-
-
-# @app.route("/status")
-# def status():
-#     return "Сделано на flask"
-
-
-# @app.route('/user/<username>')# <>переменная часть
-# def show_user_profile(username):
-#     return 'User ' + username
-#
-# @app.route('/post/<int:post_id>') #п равило <converter:variable_name>
-# def show_post(post_id):
-#     return 'Post ' + post_id
-
-
 if __name__ == '__main__':
+    #print(average_salary('Москва Python'))
     app.run()
 
 
