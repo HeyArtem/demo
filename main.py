@@ -44,6 +44,17 @@ def average_salary(search):
         return 'Нет данных!'
 
 
+def f_snippet(search):
+    '''Навыки на одной странице'''
+    snippet = [] # здесь сохраняю навыки от соискателя
+    params = {'text': f'{search}'}
+    vacancies = requests.get(url, params=params).json()
+    for item in vacancies['items']:
+        if item['snippet']['requirement']:
+            snippet.append(item['snippet']['requirement'])
+    return snippet
+
+
 @app.route("/")
 def hello():
     '''Главная страница с описанием сервиса'''
@@ -57,7 +68,8 @@ def form():
         return render_template('form.html')
     else:
         search = round(average_salary(request.form['search']), 2)
-        return render_template("search.html", search=search, start=request.form['search'])
+
+        return render_template("search.html", search=search, start=request.form['search'], snippet=f_snippet(request.form['search']))
 
 
 @app.route("/contacts")
