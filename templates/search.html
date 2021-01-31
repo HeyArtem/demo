@@ -9,10 +9,19 @@
 
 <a href="/"> Главная страница </a>
 
-<br>
-<p>Результат запроса "{{start}}":</p>
-{{search}}
-<br>
+<center>
+    <br>
+    <p>Найдено по результатам запроса "{{search}}":</p>
+    <p> Средняя зарплата: {{salary}} руб. </p>
+    <h3>Требования к кандидату (в % от всех навыков):</h3>
+    <br>
+    {% for item in snippet %}
+    <li>{{item[0]}} {{item[1]}}</li>
+    <hr>
+    {% endfor %}
+    <br>
+</center>
+
 <a href="contacts"> Контакты </a>
 <!--
 <div class="container">
