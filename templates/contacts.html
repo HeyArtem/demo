@@ -20,7 +20,9 @@
 <a href="/"> Главная страница </a>
 
 <h1> Контакты </h1>
-<p>{{cont}}</p>
+{% for item in cont %}
+<p>{{item}}</p>
+{% endfor %}
 
 </body>
 </html>
