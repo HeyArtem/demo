@@ -118,7 +118,7 @@ def form():
 @app.route("/contacts")
 def contacts():
     '''Страница с контактами'''
-    contacts = ['email@email.ru', '8-1231316546', 'Челябинск, улица, дом']
+    contacts = ['Артём Рожков', 'E-mail: Artem_White@mail.ru', 'Тел.: +7 916 440 6 110', 'Github: https://github.com/HeyArtem']
     return render_template("contacts.html", cont=contacts)
 
 
